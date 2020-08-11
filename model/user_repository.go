@@ -26,14 +26,19 @@ func Users() *UserRepository {
 }
 
 // All returns list of all users
-func (u UserRepository) All() ([]User, error) {
-	var users []User
+func (u UserRepository) All() ([]*User, error) {
+	var users []*User
 	return users, u.db.Find(&users).Error
 }
 
-// Add adds a new user
+// Add adds new user
 func (u UserRepository) Add(user User) error {
-	return u.db.Create(user).Error
+	return u.db.Create(&user).Error
+}
+
+// Update updates user data
+func (u UserRepository) Update(user User) error {
+	return u.db.Updates(user).Error
 }
 
 // Delete removes user

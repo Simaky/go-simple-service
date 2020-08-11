@@ -29,7 +29,7 @@ func Migrate(values ...interface{}) {
 }
 
 func loadAccess() string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
+	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
 		config.Config.Database.Username,
 		config.Config.Database.Password,
 		config.Config.Database.Server,

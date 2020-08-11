@@ -26,7 +26,7 @@ func main() {
 
 	model.Migrate(log)
 
-	err = web.ListenAndServe()
+	err = web.ListenAndServe(log)
 	if err != nil {
 		panic(err)
 	}

@@ -1,19 +1,19 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
+import "time"
 
 // User is a user model
 type User struct {
-	gorm.Model
-	Address
-
+	ID          uint   `gorm:"primary_key"`
 	Login       string `json:"login"`
-	Password    string `json:"password"`
+	Password    string `json:"password,omitempty"`
 	Email       string `json:"email"`
 	AvatarURL   string `json:"avatar_url"`
 	DateOfBirth int64  `json:"date_of_birth"`
+
+	CreatedAt time.Time `gorm:"default:NULL DEFAULT CURRENT_TIMESTAMP"`
+	UpdatedAt time.Time `gorm:"default:NULL ON UPDATE CURRENT_TIMESTAMP"`
+	Address
 }
 
 // Address user address
