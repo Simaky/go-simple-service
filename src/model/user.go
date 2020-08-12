@@ -4,7 +4,7 @@ import "time"
 
 // User is a user model
 type User struct {
-	ID          uint   `gorm:"primary_key"`
+	ID          uint   `json:"id",gorm:"primary_key"`
 	Login       string `json:"login"`
 	Password    string `json:"password,omitempty"`
 	Email       string `json:"email"`

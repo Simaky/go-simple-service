@@ -14,7 +14,7 @@ func main() {
 		panic("can't load config, error: " + err.Error())
 	}
 
-	log, err := logger.Init()
+	log, err := logger.Load()
 	if err != nil {
 		panic("can't load logger, error: " + err.Error())
 	}
