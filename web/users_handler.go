@@ -86,7 +86,7 @@ func ModifyUserByID(w http.ResponseWriter, r *http.Request) {
 		SendInternalServerError(w, err, logEntry)
 		return
 	}
-	renderUser(w, http.StatusCreated, user, logEntry)
+	renderUser(w, http.StatusOK, user, logEntry)
 }
 
 // DeleteUserByID deletes user by ID

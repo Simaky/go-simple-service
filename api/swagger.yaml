@@ -1,0 +1,218 @@
+swagger: "2.0"
+info:
+  description: "This is a sample GoLang server with simple authorization and image storage."
+  version: "1.0.0"
+  title: "GoLang Service"
+  contact:
+    email: "maxympritika@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+basePath: "/v2"
+tags:
+- name: "user"
+  description: "Operations about user"
+- name: "avatar"
+  description: "Operations with user avatar"
+schemes:
+- "https"
+- "http"
+paths:
+  /registration:
+    post:
+      tags:
+      - "user"
+      summary: "Registration a new user"
+      description: "Registration a new user using login and password"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        201:
+          description: "Successfully operation"
+        400:
+          description: "Bad request"
+        500:
+          description: "Internal server error"
+  /login:
+    post:
+      tags:
+      - "user"
+      summary: "User login"
+      description: "Login to user account using login and password"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User auth data"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        201:
+          description: "Successfully operation"
+        400:
+          description: "Bad request"
+        500:
+          description: "Internal server error"
+  /logout:
+    post:
+      tags:
+      - "user"
+      summary: "User logout"
+      description: "Logout from authorized account and remove cookie session"
+      produces:
+      - "application/json"
+      responses:
+        201:
+          description: "Successfully operation"
+        400:
+          description: "Bad request"
+        500:
+          description: "Internal server error"
+  /users:
+    get:
+      tags:
+      - "user"
+      summary: "Get all users"
+      description: "Get list of all users"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Return list of all users"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Bad request"
+        500:
+          description: "Internal server error"
+  /users/{ID}:
+    get:
+      tags:
+      - "user"
+      summary: "Get user"
+      description: "Get user by ID"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ID"
+        in: "path"
+        description: "User ID"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Return user by ID"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Bad request"
+        404:
+          description: "User with that ID is not exist"
+        500:
+          description: "Internal server error"
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user by ID"
+      description: "Get list of all users"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ID"
+        in: "path"
+        description: "User ID"
+        required: true
+        type: "integer"
+      responses:
+        204:
+          description: "User deleted"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Bad request"
+        404:
+          description: "User with that ID is not exist"
+        500:
+          description: "Internal server error"
+    put:
+      tags:
+      - "user"
+      summary: "Modify user profile"
+      description: "Modify user profile information"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ID"
+        in: "path"
+        description: "User ID"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Fields that needs to be changed"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "Successfully operation"
+        400:
+          description: "Bad request"
+        404:
+          description: "User with that ID is not exist"
+        500:
+          description: "Internal server error"
+  /avatar/{ID}:
+    put:
+      tags:
+      - "avatar"
+      summary: "Registration a new user"
+      description: "Registration a new user using login and password"
+      consumes:
+      - "multipart/form-data"
+      parameters:
+      - name: "ID"
+        in: "path"
+        description: "User ID"
+        required: true
+        type: "integer"
+      - in: "formData"
+        type: "file"
+        name: "avatar"
+        description: "user avatar as jpg image file"
+        required: true
+      responses:
+        200:
+          description: "Successfully operation"
+        400:
+          description: "Bad request"
+        500:
+          description: "Internal server error"
+definitions:
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "uint"
+      login:
+        type: "string"
+      password:
+        type: "string"
+      email:
+        type: "string"
+      date_of_birth:
+        type: "integer"
+      country:
+        type: "string"
+      city:
+        type: "string"

@@ -47,7 +47,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		SendInternalServerError(w, err, logEntry)
 		return
 	}
-	renderUser(w, http.StatusCreated, userDB, logEntry)
+	renderUser(w, http.StatusOK, userDB, logEntry)
 }
 
 // Logout creates new user
