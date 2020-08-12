@@ -169,6 +169,28 @@ paths:
         500:
           description: "Internal server error"
   /avatar/{ID}:
+    get:
+      tags:
+        - "avatar"
+      summary: "Get user avatar"
+      description: "Get avatar by user ID"
+      produces:
+        - "image/jpeg"
+      parameters:
+        - name: "ID"
+          in: "path"
+          description: "User ID"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Returns user avatar"
+        400:
+          description: "Bad request"
+        404:
+          description: "User with that ID is not exist"
+        500:
+          description: "Internal server error"
     put:
       tags:
       - "avatar"
