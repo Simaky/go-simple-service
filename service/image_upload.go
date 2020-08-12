@@ -33,7 +33,7 @@ func ImageUpload(file multipart.File, userID uint) (string, error) {
 	}
 
 	fileName := fmt.Sprintf("%d_user%s", userID, fileFormat)
-	f, err := os.Create(imagesPath + fileName)
+	f, err := createFile(imagesPath, fileName)
 	if err != nil {
 		return "", err
 	}
@@ -43,6 +43,15 @@ func ImageUpload(file multipart.File, userID uint) (string, error) {
 		return "", err
 	}
 	return fileName, nil
+}
+
+func createFile(path, fileName string) (*os.File, error) {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		if err := os.Mkdir(path, os.ModePerm); err != nil {
+			return nil, err
+		}
+	}
+	return os.Create(imagesPath + fileName)
 }
 
 func cropImage(img image.Image, config image.Config) (image.Image, error) {
