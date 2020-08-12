@@ -1,11 +1,12 @@
 package web
 
 import (
-	"go-rest-project/logger"
 	"net/http"
 
 	"github.com/gorilla/sessions"
 	"github.com/sirupsen/logrus"
+
+	"go-rest-project/logger"
 )
 
 const (

@@ -2,8 +2,6 @@ package web
 
 import (
 	"encoding/json"
-	"go-rest-project/logger"
-	"go-rest-project/model"
 	"net/http"
 	"strconv"
 	"strings"
@@ -13,6 +11,9 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
+
+	"go-rest-project/logger"
+	"go-rest-project/model"
 )
 
 // GetUsers show all users

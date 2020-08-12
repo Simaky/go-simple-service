@@ -2,14 +2,15 @@ package web
 
 import (
 	"encoding/json"
-	"go-rest-project/logger"
-	"go-rest-project/model"
 	"net/http"
 	"strings"
 
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
+
+	"go-rest-project/logger"
+	"go-rest-project/model"
 )
 
 // Login creates new user

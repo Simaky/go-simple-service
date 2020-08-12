@@ -1,12 +1,13 @@
 package web
 
 import (
-	"go-rest-project/logger"
-	"go-rest-project/model"
-	"go-rest-project/service"
 	"net/http"
 
 	"github.com/pkg/errors"
+
+	"go-rest-project/logger"
+	"go-rest-project/model"
+	"go-rest-project/service"
 )
 
 // SetAvatar set avatar by user ID

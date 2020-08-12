@@ -1,9 +1,9 @@
 package model
 
 import (
-	"go-rest-project/db"
-
 	"github.com/sirupsen/logrus"
+
+	"go-rest-project/db"
 )
 
 // Migrate runs migration for all models
