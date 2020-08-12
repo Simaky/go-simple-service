@@ -41,10 +41,7 @@ func GetUserByID(w http.ResponseWriter, r *http.Request) {
 
 	user, err := model.Users().GetByID(userID)
 	if err != nil {
-		if err != gorm.ErrRecordNotFound {
-			SendInternalServerError(w, err, logEntry)
-		}
-		SendNotFound(w, err, logEntry)
+		processDbErrors(w, err, logEntry)
 		return
 	}
 	renderUser(w, http.StatusOK, user, logEntry)
@@ -62,7 +59,9 @@ func ModifyUserByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if cookieUserID != userID {
-		SendBadRequest(w, errors.Errorf("you can edit only your account, your id=%d, id you want to edit=%d", cookieUserID, userID), logEntry)
+		SendBadRequest(w,
+			errors.Errorf("you can edit only your account, your id=%d, id you want to edit=%d",
+				cookieUserID, userID), logEntry)
 		return
 	}
 
@@ -102,25 +101,21 @@ func DeleteUserByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if userID != cookieUserID {
-		SendBadRequest(w, errors.Errorf("you can delete only your account, your id=%d, id you want to delete=%d", cookieUserID, userID), logEntry)
+		SendBadRequest(w,
+			errors.Errorf("you can delete only your account, your id=%d, id you want to delete=%d",
+				cookieUserID, userID), logEntry)
 		return
 	}
 
 	user, err := model.Users().GetByID(userID)
 	if err != nil {
-		if err != gorm.ErrRecordNotFound {
-			SendInternalServerError(w, err, logEntry)
-		}
-		SendNotFound(w, err, logEntry)
+		processDbErrors(w, err, logEntry)
 		return
 	}
 
 	err = model.Users().Delete(user)
 	if err != nil {
-		if err != gorm.ErrRecordNotFound {
-			SendInternalServerError(w, err, logEntry)
-		}
-		SendNotFound(w, err, logEntry)
+		processDbErrors(w, err, logEntry)
 		return
 	}
 	renderUser(w, http.StatusNoContent, user, logEntry)

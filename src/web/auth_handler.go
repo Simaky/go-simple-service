@@ -7,6 +7,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 
 	"go-rest-project/logger"
@@ -26,10 +27,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	userDB, err := model.Users().GetByLogin(user.Login)
 	if err != nil {
-		if err != gorm.ErrRecordNotFound {
-			SendInternalServerError(w, err, logEntry)
-		}
-		SendBadRequest(w, errors.Errorf("user with login: '%s' is not exist", user.Login), logEntry)
+		processDbErrors(w, err, logEntry)
 		return
 	}
 
@@ -94,7 +92,7 @@ func Registration(w http.ResponseWriter, r *http.Request) {
 
 	createdUser, err := model.Users().GetByLogin(user.Login)
 	if err != nil {
-		SendInternalServerError(w, err, logEntry)
+		processDbErrors(w, err, logEntry)
 		return
 	}
 
@@ -104,6 +102,13 @@ func Registration(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	renderUser(w, http.StatusCreated, createdUser, logEntry)
+}
+
+func processDbErrors(w http.ResponseWriter, err error, logEntry *logrus.Entry) {
+	if err != gorm.ErrRecordNotFound {
+		SendInternalServerError(w, err, logEntry)
+	}
+	SendBadRequest(w, err, logEntry)
 }
 
 func userValidation(user model.User) error {

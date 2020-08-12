@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// MockUsers mock operations with user
 func MockUsers(t *testing.T, user User) {
 	m := structToMap(t, user)
 

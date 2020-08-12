@@ -11,8 +11,6 @@ const (
 	login        = "/login"
 	logout       = "/logout"
 	registration = "/registration"
-
-	staticImages = "/images/"
 )
 
 // InitRouter returns router with all routes
