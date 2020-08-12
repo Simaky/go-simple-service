@@ -1,0 +1,12 @@
+{
+  "port": ":8000",
+  "log_level": "DEBUG",
+  "log_file_path": "go-simple-service.log",
+  "database": {
+    "username": "root",
+    "db_name": "go-rest",
+    "password": "12345678",
+    "server": "localhost",
+    "port": "3306"
+  }
+}
