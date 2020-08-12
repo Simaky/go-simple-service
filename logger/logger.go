@@ -19,6 +19,13 @@ func Init() (*logrus.Logger, error) {
 		return nil, err
 	}
 	log = logrus.New()
+
+	lvl, err := logrus.ParseLevel(config.Config.LogLevel)
+	if err != nil {
+		return nil, err
+	}
+
+	log.Level = lvl
 	log.Out = file
 	return log, nil
 }

@@ -27,7 +27,7 @@ func SendResponse(w http.ResponseWriter, header int, response interface{}, logEn
 	if err := json.NewEncoder(w).Encode(response); err != nil {
 		SendInternalServerError(w, err, logEntry)
 	}
-	logEntry.Debugf("sent response: %d, %s", header, response)
+	logEntry.Debugf("send response: %d", header)
 }
 
 // SendInternalServerError send internal serve error
