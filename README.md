@@ -1,5 +1,5 @@
 # Simple Go Service
-Simple service wrote on Golang
+Simple REST service wrote on Golang
 
 ### Main features:
 * Login
