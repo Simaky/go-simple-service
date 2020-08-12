@@ -38,7 +38,7 @@ func (u UserRepository) Add(user User) error {
 
 // Update updates user data
 func (u UserRepository) Update(user User) error {
-	return u.db.Updates(user).Error
+	return u.db.Model(&user).Updates(user).Error
 }
 
 // Delete removes user
