@@ -92,12 +92,18 @@ func Registration(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = SaveSession(w, r, user.ID)
+	createdUser, err := model.Users().GetByLogin(user.Login)
 	if err != nil {
 		SendInternalServerError(w, err, logEntry)
 		return
 	}
-	renderUser(w, http.StatusCreated, user, logEntry)
+
+	err = SaveSession(w, r, createdUser.ID)
+	if err != nil {
+		SendInternalServerError(w, err, logEntry)
+		return
+	}
+	renderUser(w, http.StatusCreated, createdUser, logEntry)
 }
 
 func userValidation(user model.User) error {

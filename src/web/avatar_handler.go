@@ -1,14 +1,45 @@
 package web
 
 import (
+	"io"
 	"net/http"
 
+	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
 
 	"go-rest-project/logger"
 	"go-rest-project/model"
 	"go-rest-project/service"
 )
+
+func GetAvatar(w http.ResponseWriter, r *http.Request) {
+	logEntry := logger.LogEntry("get-avatar-handler")
+
+	userID, err := getUserIDFromRequest(r)
+	if err != nil {
+		SendBadRequest(w, err, logEntry)
+		return
+	}
+
+	user, err := model.Users().GetByID(userID)
+	if err != nil {
+		if err != gorm.ErrRecordNotFound {
+			SendInternalServerError(w, err, logEntry)
+		}
+		SendNotFound(w, err, logEntry)
+		return
+	}
+
+	image, err := service.ImageOpen(user.AvatarURL)
+	if err != nil {
+		SendInternalServerError(w, err, logEntry)
+		return
+	}
+
+	if _, err := io.Copy(w, image); err != nil {
+		SendInternalServerError(w, err, logEntry)
+	}
+}
 
 // SetAvatar set avatar by user ID
 func SetAvatar(w http.ResponseWriter, r *http.Request) {

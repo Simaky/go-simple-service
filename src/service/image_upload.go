@@ -45,6 +45,11 @@ func ImageUpload(file multipart.File, userID uint) (string, error) {
 	return fileName, nil
 }
 
+// ImageOpen open and return image
+func ImageOpen(imgName string) (*os.File, error) {
+	return os.Open(imagesPath + imgName)
+}
+
 func createFile(path, fileName string) (*os.File, error) {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		if err := os.Mkdir(path, os.ModePerm); err != nil {

@@ -18,7 +18,7 @@ var (
 	key   = []byte("super-secret-key")
 	store = sessions.NewCookieStore(key)
 
-	excludePaths = []string{login, registration}
+	excludePaths = []string{withVersion(login), withVersion(registration)}
 )
 
 // IsAuthorized middleware that checks if user is authenticated

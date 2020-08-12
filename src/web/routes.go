@@ -1,10 +1,6 @@
 package web
 
-import (
-	"net/http"
-
-	"github.com/gorilla/mux"
-)
+import "github.com/gorilla/mux"
 
 const (
 	version = "/v1"
@@ -31,13 +27,11 @@ func InitRouter() *mux.Router {
 	r.HandleFunc(withVersion(usersID), ModifyUserByID).Methods("PUT")
 
 	r.HandleFunc(withVersion(avatarID), SetAvatar).Methods("PUT")
+	r.HandleFunc(withVersion(avatarID), GetAvatar).Methods("GET")
 
 	r.HandleFunc(withVersion(login), Login).Methods("POST")
 	r.HandleFunc(withVersion(logout), Logout).Methods("POST")
 	r.HandleFunc(withVersion(registration), Registration).Methods("POST")
-
-	r.PathPrefix(withVersion(staticImages)).Handler(http.StripPrefix(staticImages,
-		http.FileServer(http.Dir("static/images/"))))
 
 	return r
 }
